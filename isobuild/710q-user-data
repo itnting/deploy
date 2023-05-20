@@ -160,11 +160,6 @@ autoinstall:
       id: mount-0
     swap:
       size: 0
-  packages:
-    - nfs-common
-    - wget
-    - mc
-    - vim
   late-commands:
     - |
       rm /target/etc/hostname
