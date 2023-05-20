@@ -85,7 +85,7 @@ sysctl net.ipv4.ip_forward=1
 echo "apt update and install common packages..."
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-DEBIAN_FRONTEND=noninteractive apt-get install -y mc vim p7zip virt-manager qemu tmux rsync chrony rsyslog cron nfs-kernel-server bridge-utils debmirror cloud-image-utils cockpit cockpit-machines clamav
+DEBIAN_FRONTEND=noninteractive apt-get install -y wget mc vim p7zip virt-manager qemu tmux rsync chrony rsyslog cron nfs-common nfs-kernel-server bridge-utils debmirror cloud-image-utils cockpit cockpit-machines clamav
 
 echo "Configure vim..."
 cat <<EOF > /root/.vimrc
