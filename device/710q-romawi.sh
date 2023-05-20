@@ -63,24 +63,6 @@ if grep -qFx "net.ipv4.ip_forward=1" /etc/sysctl.conf; then
 fi
 sysctl net.ipv4.ip_forward=1
 
-#Configure Git
-#mkdir ${gitbase}
-#mkdir ${gitdev}
-#cp /data/git/*.pem /root/.ssh
-#cp /data/git/root_config /root/.ssh/config
-#chmod 600 /root/.ssh/*.pem
-
-#cp /data/git/*.pem /home/${user}/.ssh
-#cp /data/git/admin_config /home/${user}/.ssh/config
-#chown ${user}:${user} /home/${user}/.ssh/*.pem
-#chmod 600 /home/${user}/.ssh/*.pem
-
-#DEBIAN_FRONTEND=noninteractive apt -y install git
-
-#global user.email "registrations@fmcrr.com"
-#git config --global core.editor "vim"
-#git clone git@github:fmcrr/build ${gitdev}/build
-
 # Update packages
 echo "apt update and install common packages..."
 apt-get update
