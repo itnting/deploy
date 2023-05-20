@@ -1,10 +1,10 @@
 #Configure Git
 #Can source vars later
-strPathGitBase="/git"
+strPathGitBase="/git/home"
 strGitBranch="home"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 strGitUserEmail="dstote@webnmail.net"
-strGitAccount="git@github.itnting.com:itnting"
+strGitAccount="git@git.itnting.com:itnting"
 strUser="administrator"
 
 mkdir ${strPathGitBase}
@@ -20,6 +20,7 @@ chown ${strUser}:${strUser} /home/${strUser}/.ssh/*.pem
 chmod 600 /home/${strUser}/.ssh/*.pem
 
 DEBIAN_FRONTEND=noninteractive apt -y install git
-global user.email "${strGitUserEmail}"
+git config --global user.email "${strGitUserEmail}"
 git config --global core.editor "vim"
 git clone ${strGitAccount}/deploy ${strPathGitBranch}/deploy
+
