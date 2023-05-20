@@ -1,0 +1,112 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: offline-install
+    geoip: true
+    mirror-selection:
+    primary:
+    - arches:
+        - amd64
+        - i386
+      uri: http://mirror.aarnet.edu.au/pub/ubuntu/archive/
+    preserve_sources_list: false
+  drivers:
+    install: false
+  identity:
+    hostname: build
+    password: $6$sBA.rpZAmKQD.q8O$q3TLFHq1bb5nk4HmCaVlTVsDSwE.O2eu3lXtNti.L8HhKPDSu2COGvjltdBrSEjQ5NMOeky6rP0Cq6eg.XHPy1
+    realname: Mr Admin.
+    username: administrator
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: au
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: false
+  ssh:
+    allow-pw: true
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
+    install-server: true
+  storage:
+    config:
+    - ptable: gpt
+      path: /dev/sda
+      wipe: superblock
+      preserve: false
+      name: ''
+      grub_device: false
+      type: disk
+      id: disk-sda
+    - device: disk-sda
+      size: 1127219200
+      wipe: superblock
+      flag: boot
+      number: 1
+      preserve: false
+      grub_device: true
+      offset: 1048576
+      type: partition
+      id: partition-0
+    - fstype: fat32
+      volume: partition-0
+      preserve: false
+      type: format
+      id: format-0
+    - device: disk-sda
+      size: 21474836480
+      wipe: superblock
+      number: 2
+      preserve: false
+      grub_device: false
+      offset: 1128267776
+      type: partition
+      id: partition-1
+    - fstype: xfs
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-1
+    - path: /
+      device: format-1
+      type: mount
+      id: mount-1
+    - device: disk-sda
+      size: -1
+      wipe: superblock
+      number: 3
+      preserve: false
+      grub_device: false
+      offset: 22603104256
+      type: partition
+      id: partition-2
+    - fstype: ext4
+      volume: partition-2
+      preserve: false
+      type: format
+      id: format-2
+    - path: /vm1
+      device: format-2
+      type: mount
+      id: mount-2
+    - path: /boot/efi
+      device: format-0
+      type: mount
+      id: mount-0
+  packages:
+    - nfs-common
+    - vim
+    - mc
+    - wget
+  late-commands:
+    - |
+      echo 'administrator ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/99_admin_nopasswd
+      chmod 750 /target/etc/sudoers.d/99_admin_nopasswd
+      mkdir /target/data
+      true
+  version: 1

@@ -1,0 +1,174 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: offline-install
+    geoip: true
+    mirror-selection:
+    primary:
+    - arches:
+        - amd64
+        - i386
+      uri: http://mirror.aarnet.edu.au/pub/ubuntu/archive/
+    preserve_sources_list: false
+  codecs:
+    install: false
+  drivers:
+    install: false
+  identity:
+    hostname: build
+    password: $6$IwxSI08cHLX2cUF0$EEkBW8Nh3R6QEagjSOeawUQrXfEcoOTVDfjOdFXRau5IIhSi5CjZkSPUuaVLhZkS43VbaLQWXM5/I46GtXdHm/
+    realname: Mr Admin
+    username: administrator
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: au
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: true
+  ssh:
+    allow-pw: true
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
+    install-server: true
+  storage:
+    config:
+    - ptable: gpt
+      path: /dev/nvme0n1
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      type: disk
+      id: disk-nvme0n1
+    - device: disk-nvme0n1
+      size: 1048576
+      flag: bios_grub
+      number: 1
+      preserve: false
+      grub_device: false
+      offset: 1048576
+      path: /dev/nvme0n1p1
+      type: partition
+      id: partition-0
+    - device: disk-nvme0n1
+      size: 2147483648
+      wipe: superblock
+      number: 2
+      preserve: false
+      grub_device: false
+      offset: 2097152
+      path: /dev/nvme0n1p2
+      type: partition
+      id: partition-1
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-0
+    - device: disk-nvme0n1
+      size: -1
+      wipe: superblock
+      number: 3
+      preserve: false
+      grub_device: false
+      offset: 2149580800
+      path: /dev/nvme0n1p3
+      type: partition
+      id: partition-2
+    - name: vg0
+      devices:
+      - partition-2
+      preserve: false
+      type: lvm_volgroup
+      id: lvm_volgroup-0
+    - name: root
+      volgroup: lvm_volgroup-0
+      size: 21474836480B
+      wipe: superblock
+      preserve: false
+      path: /dev/vg0/root
+      type: lvm_partition
+      id: lvm_partition-1
+    - fstype: ext4
+      volume: lvm_partition-1
+      preserve: false
+      type: format
+      id: format-2
+    - path: /
+      device: format-2
+      type: mount
+      id: mount-2
+    - name: swap
+      volgroup: lvm_volgroup-0
+      size: 17179869184B
+      wipe: superblock
+      preserve: false
+      path: /dev/vg0/swap
+      type: lvm_partition
+      id: lvm_partition-2
+    - fstype: swap
+      volume: lvm_partition-2
+      preserve: false
+      type: format
+      id: format-3
+    - path: ''
+      device: format-3
+      type: mount
+      id: mount-3
+    - name: git
+      volgroup: lvm_volgroup-0
+      size: 10737418240B
+      wipe: superblock
+      preserve: false
+      path: /dev/vg0/git
+      type: lvm_partition
+      id: lvm_partition-3
+    - fstype: ext4
+      volume: lvm_partition-3
+      preserve: false
+      type: format
+      id: format-4
+    - path: /git
+      device: format-4
+      type: mount
+      id: mount-4
+    - name: vm1
+      volgroup: lvm_volgroup-0
+      size: -1
+      wipe: superblock
+      preserve: false
+      path: /dev/vg0/vm1
+      type: lvm_partition
+      id: lvm_partition-4
+    - fstype: ext4
+      volume: lvm_partition-4
+      preserve: false
+      type: format
+      id: format-5
+    - path: /vm1
+      device: format-5
+      type: mount
+      id: mount-5
+    - path: /boot
+      device: format-0
+      type: mount
+      id: mount-0
+    swap:
+      size: 0
+  packages:
+    - nfs-common
+    - wget
+    - mc
+    - vim
+  late-commands:
+    - |
+      rm /target/etc/hostname
+      echo 'administrator ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/99_admin_nopasswd
+      mkdir /target/data
+      true
+  version: 1
