@@ -1,17 +1,23 @@
 # This code configures a base deployed machine as a host for deployment
+# script is intended to be run as root
+# The seed volume needs to be mounted before running
+
 # device specific vars
 strMachineType='710q'
 strHostInterface='enp0s31f6'
 
 # path vars
 strPathSeed=/data
+strPathGitRoot="/git"
+strPathGitBranch="${strPathGitRoot}/dev"
+strPathVM="/vm1"
+strPathSeedclamav="${strPathSeed}/clamav"
+strPathVMclamav="${srtPathVM}/clamav"
+strPathVMxml="${strPathSeed}/xml"
 
-strPathGitRoot=/git
-strPathGitBranch=${strPathGitRoot}/dev
-strPathVM=/vm1
-strPathSeedclamav=${strPathSeed}/clamav
-strPathVMclamav=${srtPathVM}/clamav
-strPathVMxml=${strPathSeed}/xml
+strPathGitBase="/git"
+strGitBranch="dev"
+strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 
 strUser=dstote
 
@@ -21,9 +27,14 @@ strHostDNS1='8.8.8.8'
 strHostDNS2='8.8.4.4'
 strHostDefaultRoute='192.168.30.1'
 
+#Copy seed data
+echo Copying ${strPathSeed}${strPathVM} to ${strPathVM}
+cp ${strPathSeed}${strPathVM}* ${strPathVM} -r
+
 #clam AV local mirror
-echo "Copying clamav seed..."
+echo "Copying clamav seed from ${strPathSeedclamav} to ${stPathVM}/ ..."
 rsync -av ${strPathSeedclamav} ${stPathVM}/
+echo "Configure clamav..."
 cp ${strPathVMclamav}/freshclam.conf /etc/clamav
 cp ${strPathVMclamav}/usr.bin.freshclam /etc/apparmor.d
 chown clamav:clamav /etc/clamav/freshclam.conf
@@ -33,7 +44,16 @@ systemctl stop clamav-freshclam
 freshclam
 systemctl start clamav-freshclam
 
-# visrh
+# this does not fit on test machine, also it might go on NAS anyway
+# For now use a symlink
+# cp /data/vm1/debmirror* /vm1/debmirror -r
+echo Create symlink ${strPathVM}/debmirror to ${strPathSeed}/debmirror
+ln -s ${strPathSeed}/debmirror ${strPathVM}/debmirror
+echo Confiure debmirror sources...
+cp ${strPathSeed}/debmirror/sources.list /etc/apt
+
+# Setup Virtual network, storage from xmls
+echo Define virtual network and storage...
 virsh net-define ${strPathVMxml}/LAN.xml
 virsh net-autostart LAN
 virsh net-start LAN
@@ -50,96 +70,43 @@ virsh pool-start isos
 echo "${strPathVM} *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
 systemctl restart nfs-server
 
-git config --global core.editor "vim"
 
 #configure forwarding and iptables
+echo "Confiure Forwarding..."
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 sysctl net.ipv4.ip_forward=1
-echo Copying /data/vm1 to /vm1
-# folder is now created in deployment as part of disk layout
-# mkdir /vm1 
 
-mkdir ${gitbase}
-mkdir ${gitlive}
-mkdir ${gitdev}
+#Configure Git
+#mkdir ${gitbase}
+#mkdir ${gitdev}
+#cp /data/git/*.pem /root/.ssh
+#cp /data/git/root_config /root/.ssh/config
+#chmod 600 /root/.ssh/*.pem
 
-#copy git not required anymore
-#cp /data/git/* /git -r
-cp /data/vm1/* /vm1 -r
+#cp /data/git/*.pem /home/${user}/.ssh
+#cp /data/git/admin_config /home/${user}/.ssh/config
+#chown ${user}:${user} /home/${user}/.ssh/*.pem
+#chmod 600 /home/${user}/.ssh/*.pem
 
-# this does not fit on test machine, also it might go on NAS anyway
-#cp /data/vm1/debmirror* /vm1/debmirror -r
+#DEBIAN_FRONTEND=noninteractive apt -y install git
 
-cp /data/git/*.pem /root/.ssh
-cp /data/git/root_config /root/.ssh/config
-chmod 600 /root/.ssh/*.pem
+#global user.email "registrations@fmcrr.com"
+#git config --global core.editor "vim"
+#git clone git@github:fmcrr/build ${gitdev}/build
 
-cp /data/git/*.pem /home/${user}/.ssh
-cp /data/git/admin_config /home/${user}/.ssh/config
-chown ${user}:${user} /home/${user}/.ssh/*.pem
-chown ${user}:lobal user.email "registrations@fmcrr.com"
-git clone git@github:fmcrr/build ${gitdev}/build
-git clone git@github:fmcrr/ansible-deploy ${gitdev}/ansible-deploy
-
-echo Applying netplan...
-netplan apply
-sleep 5
-
-#This script configures a new host to be kvm server
-#need to create /vm1 and /vm1/vms /vm1/isos
-
-# not needed done on autoinstall
-# echo 'administrator ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_admin_nopasswd
-
-#clam AV local mirror
-echo "Copying clamav seed..."
-rsync -av /data/clamav /vm1/
-cp /vm1/clamav/freshclam.conf /etc/clamav
-cp /vm1/clamav/usr.bin.freshclam /etc/apparmor.d
-chown clamav:clamav /etc/clamav/freshclam.conf
-chown clamav:clamav -R /vm1/clamav
-apparmor_parser -r /etc/apparmor.d/usr.bin.freshclam
-systemctl stop clamav-freshclam
-freshclam
-systemctl start clamav-freshclam
-
-# visrh
-xml="/data/build/hsts/xml"
-virsh net-define ${xml}/LAN.xml
-virsh net-autostart LAN
-virsh net-start LAN
-
-virsh pool-define ${xml}/vm1-vms.xml
-virsh pool-autostart vm1-vms
-virsh pool-start vm1-vms
-
-virsh pool-define ${xml}/isos.xml
-virsh pool-autostart isos
-virsh pool-start isos
-
-echo "/vm1 *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
-systemctl restart nfs-server
-
-git config --global core.editor "vim"
-
-#configure forwarding and iptables
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-sysctl net.ipv4.ip_forward=1${user} /home/${user}/.ssh/config
-chmod 600 /home/${user}/.ssh/*.pem
-
-# ln /data/debmirror for now, will need to copy over debmirror at somepoint if local though!
+# Update packages
 echo "apt update and install common packages..."
-ln -s /data/debmirror /vm1/debmirror
-cp /data/debmirror/sources.list /etc/apt
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y mc vim p7zip virt-manager qemu tmux rsync chrony rsyslog cron nfs-kernel-server bridge-utils debmirror cloud-image-utils cockpit cockpit-machines clamav
 
+echo "Configure vim..."
 cat <<EOF > /root/.vimrc
 colorscheme blue
 syntax on
 EOF
 
+echo "Configure Netplans for ${strHostInterface} and bridge..."
 #remove all other .yml 's
 rm /etc/netplan/*
 #create new netplans
@@ -148,67 +115,25 @@ cat <<EOF > /etc/netplan/00-main.yaml
 network:
   version: 2
   ethernets:
-    ${hostint}:
+    ${strHostInterface}:
       dhcp4: false
-EOFlobal user.email "registrations@fmcrr.com"
-git clone git@github:fmcrr/build ${gitdev}/build
-git clone git@github:fmcrr/ansible-deploy ${gitdev}/ansible-deploy
+EOF
 
-echo Applying netplan...
-netplan apply
-sleep 5
-
-#This script configures a new host to be kvm server
-#need to create /vm1 and /vm1/vms /vm1/isos
-
-# not needed done on autoinstall
-# echo 'administrator ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_admin_nopasswd
-
-#clam AV local mirror
-echo "Copying clamav seed..."
-rsync -av /data/clamav /vm1/
-cp /vm1/clamav/freshclam.conf /etc/clamav
-cp /vm1/clamav/usr.bin.freshclam /etc/apparmor.d
-chown clamav:clamav /etc/clamav/freshclam.conf
-chown clamav:clamav -R /vm1/clamav
-apparmor_parser -r /etc/apparmor.d/usr.bin.freshclam
-systemctl stop clamav-freshclam
-freshclam
-systemctl start clamav-freshclam
-
-# visrh
-xml="/data/build/hsts/xml"
-virsh net-define ${xml}/LAN.xml
-virsh net-autostart LAN
-virsh net-start LAN
-
-virsh pool-define ${xml}/vm1-vms.xml
-virsh pool-autostart vm1-vms
-virsh pool-start vm1-vms
-
-virsh pool-define ${xml}/isos.xml
-virsh pool-autostart isos
-virsh pool-start isos
-
-echo "/vm1 *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
-systemctl restart nfs-server
-
-git config --global core.editor "vim"
-
-#configure forwarding and iptables
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-sysctl net.ipv4.ip_forward=1
 cat <<EOF > /etc/netplan/01-br0.yaml
 network:
   version: 2
   bridges:
     br0:
-      interfaces: [${hostint}]
+      interfaces: [${strHostInterface}]
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - ${strHostIP}/24
+      nameservers:
+        addresses: [${strHostDNS1}, ${strHostDNS2}]
       parameters:
         stp: false
         forward-delay: 4
-      dhcp4: true
-      dhcp6: false
 EOF
 
 cat <<EOF > /usr/lib/systemd/network/99-default.link
@@ -221,57 +146,6 @@ AlternativeNamesPolicy=database onboard slot path
 MACAddressPolicy=none
 EOF
 
-echo Check git install and get latest repos to ${gitdev}...
-DEBIAN_FRONTEND=noninteractive apt -y install git
-cd ${gitdev}
-git config --global user.email "registrations@fmcrr.com"
-git clone git@github:fmcrr/build ${gitdev}/build
-git clone git@github:fmcrr/ansible-deploy ${gitdev}/ansible-deploy
-
 echo Applying netplan...
 netplan apply
 sleep 5
-
-#This script configures a new host to be kvm server
-#need to create /vm1 and /vm1/vms /vm1/isos
-
-# not needed done on autoinstall
-# echo 'administrator ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_admin_nopasswd
-
-#clam AV local mirror
-echo "Copying clamav seed..."
-rsync -av /data/clamav /vm1/
-cp /vm1/clamav/freshclam.conf /etc/clamav
-cp /vm1/clamav/usr.bin.freshclam /etc/apparmor.d
-chown clamav:clamav /etc/clamav/freshclam.conf
-chown clamav:clamav -R /vm1/clamav
-apparmor_parser -r /etc/apparmor.d/usr.bin.freshclam
-systemctl stop clamav-freshclam
-freshclam
-systemctl start clamav-freshclam
-
-# visrh
-xml="/data/build/hsts/xml"
-virsh net-define ${xml}/LAN.xml
-virsh net-autostart LAN
-virsh net-start LAN
-
-virsh pool-define ${xml}/vm1-vms.xml
-virsh pool-autostart vm1-vms
-virsh pool-start vm1-vms
-
-virsh pool-define ${xml}/isos.xml
-virsh pool-autostart isos
-virsh pool-start isos
-
-echo "/vm1 *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
-systemctl restart nfs-server
-
-git config --global core.editor "vim"
-
-#configure forwarding and iptables
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-sysctl net.ipv4.ip_forward=1
-
-
-
