@@ -17,7 +17,7 @@ strPathVMclamav="${srtPathVM}/clamav"
 strPathVMxml="${strPathSeed}/xml"
 
 strPathGitBase="/git"
-strGitBranch="dev"
+strGitBranch="home"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 
 strUser="administrator"
