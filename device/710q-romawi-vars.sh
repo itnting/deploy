@@ -5,6 +5,7 @@
 # device specific vars
 strMachineType='710q'
 strHostInterface='enp0s31f6'
+strTimeZone='Australia/Brisbane'
 
 # path vars
 strPathSeed=/data
