@@ -1,6 +1,8 @@
 echo "Getting vars.."
 source 710q-romawi-vars.sh
 
+timedatectl set-timezone ${strTimeZone}
+
 # Make sure user has sudo
 echo "Configure sudo for ${strUser}
 echo '${strUser} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_${strUser}_nopasswd
