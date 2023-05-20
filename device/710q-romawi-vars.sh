@@ -10,11 +10,11 @@ strTimeZone='Australia/Brisbane'
 # path vars
 strPathSeed=/data
 strPathGitRoot="/git"
-strPathGitBranch="${strPathGitRoot}/dev"
+strPathGitBranch="${strPathGitRoot}/home"
 strPathVM="/vm1"
 strPathSeedclamav="${strPathSeed}/clamav"
 strPathVMclamav="${srtPathVM}/clamav"
-strPathVMxml="${strPathSeed}/xml"
+strPathVMxml="${strPathSeed}/deploy/xml"
 
 strPathGitBase="/git"
 strGitBranch="home"
