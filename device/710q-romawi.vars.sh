@@ -68,12 +68,19 @@ virsh pool-start isos
 
 # Export the VM path so other hosts can share, makes it easier to copy between hosts
 echo "${strPathVM} *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
+if [ ! "$(grep "${strPathVM}" /etc/exports)" ]; then
+  echo "${strPathVM} *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
+fi
+if [ ! "$(grep "${strPathSeed}" /etc/exports)" ]; then
+  echo "${strPathSeed} *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
+fi
 systemctl restart nfs-server
-
 
 #configure forwarding and iptables
 echo "Confiure Forwarding..."
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+if grep -qFx "net.ipv4.ip_forward=1" /etc/sysctl.conf; then
+  echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+fi
 sysctl net.ipv4.ip_forward=1
 
 #Configure Git
