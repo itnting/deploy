@@ -19,13 +19,16 @@ strPathGitBase="/git"
 strGitBranch="dev"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 
-strUser=dstote
+strUser="administrator"
 
 # IP vars
 strHostIP='192.168.30.4'
 strHostDNS1='8.8.8.8'
 strHostDNS2='8.8.4.4'
 strHostDefaultRoute='192.168.30.1'
+
+# Make sure user has sudo
+echo '${strUser} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_${strUser}_nopasswd
 
 #Copy seed data
 echo Copying ${strPathSeed}${strPathVM} to ${strPathVM}
