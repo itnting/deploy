@@ -4,7 +4,7 @@ strPathGitBase="/git"
 strGitBranch="home"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 strGitUserEmail="dstote@webnmail.net"
-strGitRepo="git@github.itnting.com:itnting"
+strGitAccount="git@github.itnting.com:itnting"
 strUser="administrator"
 
 mkdir ${strPathGitBase}
@@ -22,4 +22,4 @@ chmod 600 /home/${strUser}/.ssh/*.pem
 DEBIAN_FRONTEND=noninteractive apt -y install git
 global user.email "${strGitUserEmail}"
 git config --global core.editor "vim"
-git clone ${strGitRepo}/deploy ${strPathGitBranch}/deploy
+git clone ${strGitAccount}/deploy ${strPathGitBranch}/deploy
