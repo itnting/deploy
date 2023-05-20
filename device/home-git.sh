@@ -3,8 +3,8 @@
 strPathGitBase="/git"
 strGitBranch="home"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
-strGitUserEmail="registrations@fmcrr.com"
-strGitRepo="git@github:fmcrr"
+strGitUserEmail="dstote@webnmail.net"
+strGitRepo="git@github.itnting.com:itnting"
 strUser="administrator"
 
 mkdir ${strPathGitBase}
