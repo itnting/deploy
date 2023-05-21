@@ -15,12 +15,12 @@ cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
 echo "Create $${strPathVMclamav}..."
 mkdir ${strPathVMclamav}
 echo "Copying clamav seed from ${strPathSeed}/${strClamav} to ${strPathVM}/${strClamav} ..."
-cp ${strPathSeed}/${strPathClamav}/* ${strPathVM}/${strPathClamav}
+cp ${strPathSeed}/${strClamav}/* ${strPathVM}/${strClamav} -r
 echo "Configure clamav..."
-cp ${strPathVMclamav}/freshclam.conf /etc/clamav
+cp ${strPathVMclamav}/freshclam.conf /etc/${strClamav}
 cp ${strPathVMclamav}/usr.bin.freshclam /etc/apparmor.d
-chown clamav:clamav /etc/clamav/freshclam.conf
-chown clamav:clamav -R ${strPathVMclamav}
+chown ${strClamav}:${strClamav} /etc/${strClamav}/freshclam.conf
+chown ${strClamav}:${strClamav} -R ${strPathVM}/${strClamav}
 apparmor_parser -r /etc/apparmor.d/usr.bin.freshclam
 systemctl stop clamav-freshclam
 freshclam
