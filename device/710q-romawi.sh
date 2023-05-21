@@ -4,12 +4,12 @@ source 710q-romawi-vars.sh
 timedatectl set-timezone ${strTimeZone}
 
 # Make sure user has sudo
-echo "Configure sudo for ${strUser}
-echo '${strUser} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99_${strUser}_nopasswd
+echo "Configure sudo for ${strUser}"
+echo "${strUser} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99_${strUser}_nopasswd
 
 #Copy seed data
 echo "Copying ${strPathSeed}${strPathVM} to ${strPathVM}..."
-cp ${strPathSeed}${strPathVM}* ${strPathVM} -r
+cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
 
 #clam AV local mirror
 echo "Copying clamav seed from ${strPathSeedclamav} to ${stPathVM}/ ..."
@@ -31,20 +31,6 @@ echo Create symlink ${strPathVM}/debmirror to ${strPathSeed}/debmirror
 ln -s ${strPathSeed}/debmirror ${strPathVM}/debmirror
 echo Confiure debmirror sources...
 cp ${strPathSeed}/debmirror/sources.list /etc/apt
-
-# Setup Virtual network, storage from xmls
-echo Define virtual network and storage...
-virsh net-define ${strPathVMxml}/LAN.xml
-virsh net-autostart LAN
-virsh net-start LAN
-
-virsh pool-define ${strPathVMxml}/vm1-vms.xml
-virsh pool-autostart vm1-vms
-virsh pool-start vm1-vms
-
-virsh pool-define ${strPathVMxml}/isos.xml
-virsh pool-autostart isos
-virsh pool-start isos
 
 # Export the VM path so other hosts can share, makes it easier to copy between hosts
 echo "${strPathVM} *(rw,no_root_squash,no_subtree_check)" >> /etc/exports
@@ -114,6 +100,21 @@ NamePolicy=keep kernel database onboard slot path
 AlternativeNamesPolicy=database onboard slot path
 MACAddressPolicy=none
 EOF
+
+# Setup Virtual network, storage from xmls
+echo Define virtual network and storage...
+virsh net-define ${strPathVMxml}/LAN.xml
+virsh net-autostart LAN
+virsh net-start LAN
+
+virsh pool-define ${strPathVMxml}/vm1-vms.xml
+virsh pool-autostart vm1-vms
+virsh pool-start vm1-vms
+
+virsh pool-define ${strPathVMxml}/isos.xml
+virsh pool-autostart isos
+virsh pool-start isos
+
 
 echo Applying netplan...
 netplan apply
