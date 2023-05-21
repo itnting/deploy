@@ -13,7 +13,7 @@ cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
 
 #clam AV local mirror
 echo "Copying clamav seed from ${strPathSeedclamav} to ${stPathVM}/ ..."
-rsync -av ${strPathSeedclamav} ${stPathVM}/
+rsync -av ${strPathSeedclamav} ${strPathVM}/
 echo "Configure clamav..."
 cp ${strPathVMclamav}/freshclam.conf /etc/clamav
 cp ${strPathVMclamav}/usr.bin.freshclam /etc/apparmor.d
