@@ -12,7 +12,7 @@ strPathSeed="/data"
 strPathGitRoot="/git"
 strPathGitBranch="${strPathGitRoot}/home"
 strPathVM="/vm1"
-strPathVMClamav="clamav"
+strClamav="clamav"
 strPathVMxml="${strPathSeed}/deploy/xml"
 
 strPathGitBase="/git"
