@@ -8,12 +8,11 @@ strHostInterface='enp0s31f6'
 strTimeZone='Australia/Brisbane'
 
 # path vars
-strPathSeed=/data
+strPathSeed="/data"
 strPathGitRoot="/git"
 strPathGitBranch="${strPathGitRoot}/home"
 strPathVM="/vm1"
-strPathSeedclamav="${strPathSeed}/clamav"
-strPathVMclamav="${srtPathVM}/clamav"
+strPathVMClamav="clamav"
 strPathVMxml="${strPathSeed}/deploy/xml"
 
 strPathGitBase="/git"
