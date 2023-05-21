@@ -11,7 +11,7 @@ mkdir ${strPathGitBase}
 mkdir ${strPathGitBranch}
 
 cp /data/git/*.pem /root/.ssh
-cp /data/git/root_config /root/.ssh/config
+cp /data/git/home_config /root/.ssh/config
 chmod 600 /root/.ssh/*.pem
 
 cp /data/git/*.pem /home/${strUser}/.ssh
