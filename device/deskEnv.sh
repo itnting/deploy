@@ -1,6 +1,6 @@
 DEBIAN_FRONTEND=noninteractive apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-DEBIAN_FRONTEND=noninteractive apt-get install -y xubuntu-desktop xrdp firefox udisks2-lvm2 filezilla tigervnc-viewer gparted remmina --ignore-missing 
+DEBIAN_FRONTEND=noninteractive apt-get install -y xubuntu-desktop xrdp firefox filezilla tigervnc-viewer udisks2-lvm2  gparted remmina --ignore-missing 
 DEBIAN_FRONTEND=noninteractive apt-get remove -y evolution* thunderbird gdm libreoffice*
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
 
