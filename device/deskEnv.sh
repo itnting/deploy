@@ -13,5 +13,5 @@ else
   echo "ForwardX11=yes" >> /root/.ssh/config
 fi
 
-update-alternatives --config x-session-manager 
+echo 2 | update-alternatives --config x-session-manager
 #pick option 2
