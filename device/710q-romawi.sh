@@ -85,7 +85,13 @@ network:
       addresses:
         - ${strHostIP}/24
       nameservers:
-        addresses: [${strHostDNS1}, ${strHostDNS2}]
+        addresses:
+          - ${strHostDNS1}
+          - ${strHostDNS2}
+      routes:
+        - to: default
+          via: ${strHostDefaultRoute}
+      mtu: 1500
       parameters:
         stp: false
         forward-delay: 4
