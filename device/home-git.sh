@@ -1,6 +1,6 @@
 #Configure Git
 #Can source vars later
-strPathGitBase="/git/home"
+strPathGitBase="/git"
 strGitBranch="home"
 strPathGitBranch="${strPathGitBase}/${strGitBranch}"
 strGitUserEmail="dstote@webnmail.net"
