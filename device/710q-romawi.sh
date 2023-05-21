@@ -12,8 +12,8 @@ echo "Copying ${strPathSeed}${strPathVM} to ${strPathVM}..."
 cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
 
 #clam AV local mirror
-echo "Create ${strPathVMclamav}..."
-mkdir ${strPathVMclamav}
+echo "Create ${strPathVM}/${strClamav}..."
+mkdir ${strPathVM}/${strClamav}
 echo "Copying clamav seed from ${strPathSeed}/${strClamav} to ${strPathVM}/${strClamav} ..."
 cp ${strPathSeed}/${strClamav}/* ${strPathVM}/${strClamav} -r
 echo "Configure clamav..."
