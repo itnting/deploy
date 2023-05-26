@@ -36,17 +36,18 @@ autoinstall:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
     install-server: true
   storage:
+    swap:
+      size: 0
     config:
     - ptable: gpt
       serial: USB_SanDisk_3.2Gen1_010110b21b0a2bfbdde3673617d1a59e223a954e5bf448624c3a0a159317ca40151300000000000000000000263397e9ff9c490081558107192c8422-0:0
-      path: /dev/sdb
       wipe: superblock-recursive
       preserve: false
       name: ''
       grub_device: false
       type: disk
-      id: disk-sdb
-    - device: disk-sdb
+      id: disk-usb
+    - device: disk-usb
       size: 1127219200
       wipe: superblock
       flag: boot
@@ -54,7 +55,6 @@ autoinstall:
       preserve: false
       grub_device: true
       offset: 1048576
-      path: /dev/sdb1
       type: partition
       id: partition-0
     - fstype: fat32
@@ -62,14 +62,13 @@ autoinstall:
       preserve: false
       type: format
       id: format-0
-    - device: disk-sdb
+    - device: disk-usb
       size: 2147483648
       wipe: superblock
       number: 2
       preserve: false
       grub_device: false
       offset: 1128267776
-      path: /dev/sdb2
       type: partition
       id: partition-1
     - fstype: ext4
@@ -77,7 +76,7 @@ autoinstall:
       preserve: false
       type: format
       id: format-1
-    - device: disk-sdb
+    - device: disk-usb
       size: 16106127360
       wipe: superblock
       number: 3
@@ -85,7 +84,6 @@ autoinstall:
       grub_device: false
       offset: 3275751424
       resize: true
-      path: /dev/sdb3
       type: partition
       id: partition-2
     - fstype: ext4
@@ -97,14 +95,14 @@ autoinstall:
       device: format-3
       type: mount
       id: mount-3
-    - device: disk-sdb
+      options: 'noatime'
+    - device: disk-usb
       size: 10737418240
       wipe: superblock
       number: 4
       preserve: false
       grub_device: false
       offset: 19381878784
-      path: /dev/sdb4
       type: partition
       id: partition-3
     - fstype: ext4
