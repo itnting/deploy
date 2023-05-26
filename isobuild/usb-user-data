@@ -1,0 +1,147 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: abort
+    geoip: true
+    mirror-selection:
+      primary:
+      - country-mirror
+      - arches:
+        - amd64
+        - i386
+        uri: http://archive.ubuntu.com/ubuntu
+      - arches:
+        - s390x
+        - arm64
+        - armhf
+        - powerpc
+        - ppc64el
+        - riscv64
+        uri: http://ports.ubuntu.com/ubuntu-ports
+    preserve_sources_list: false
+  codecs:
+    install: false
+  drivers:
+    install: false
+  identity:
+    hostname: usbhst
+    password: $6$uZdNfF77ak8yf9bK$ayM0y3orU98sF42nyEYb7ACBa.dRtmQmyaBjvtJ1oX9c1JZHTDEOcGxV3k68rs.UL.SxVHsKbRmzh3Rcup2ms1
+    realname: Mr Admin
+    username: administrator
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: au
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      enp0s31f6:
+        dhcp4: true
+    version: 2
+    wifis:
+      wlp2s0:
+        access-points:
+          romawi-5g:
+            password: SecureNetKey1
+        dhcp4: true
+  source:
+    id: ubuntu-server
+    search_drivers: false
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  storage:
+    config:
+    - ptable: gpt
+      serial: USB_SanDisk_3.2Gen1_010110b21b0a2bfbdde3673617d1a59e223a954e5bf448624c3a0a159317ca40151300000000000000000000263397e9ff9c490081558107192c8422-0:0
+      path: /dev/sdb
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: false
+      type: disk
+      id: disk-sdb
+    - device: disk-sdb
+      size: 1127219200
+      wipe: superblock
+      flag: boot
+      number: 1
+      preserve: false
+      grub_device: true
+      offset: 1048576
+      path: /dev/sdb1
+      type: partition
+      id: partition-0
+    - fstype: fat32
+      volume: partition-0
+      preserve: false
+      type: format
+      id: format-0
+    - device: disk-sdb
+      size: 2147483648
+      wipe: superblock
+      number: 2
+      preserve: false
+      grub_device: false
+      offset: 1128267776
+      path: /dev/sdb2
+      type: partition
+      id: partition-1
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-1
+    - device: disk-sdb
+      size: 16106127360
+      wipe: superblock
+      number: 3
+      preserve: false
+      grub_device: false
+      offset: 3275751424
+      resize: true
+      path: /dev/sdb3
+      type: partition
+      id: partition-2
+    - fstype: ext4
+      volume: partition-2
+      preserve: false
+      type: format
+      id: format-3
+    - path: /
+      device: format-3
+      type: mount
+      id: mount-3
+    - device: disk-sdb
+      size: 10737418240
+      wipe: superblock
+      number: 4
+      preserve: false
+      grub_device: false
+      offset: 19381878784
+      path: /dev/sdb4
+      type: partition
+      id: partition-3
+    - fstype: ext4
+      volume: partition-3
+      preserve: false
+      type: format
+      id: format-4
+    - path: /git
+      device: format-4
+      type: mount
+      id: mount-4
+    - path: /boot
+      device: format-1
+      type: mount
+      id: mount-1
+    - path: /boot/efi
+      device: format-0
+      type: mount
+      id: mount-0
+  updates: security
+  version: 1
