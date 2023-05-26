@@ -1,6 +1,7 @@
+strType='usb'
 strPathOSiso="/vm1/isos/ubuntu-22.04.2-live-server-amd64.iso -osource-files"
-strPathOutput="710q-ubuntu.iso"
-strUserDataFile="710q-user-data"
+strPathOutput="${strType}-ubuntu.iso"
+strUserDataFile="${strType}-user-data"
 
 echo Expanding iso...
 #only do this if the directory source-files does not exist
