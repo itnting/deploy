@@ -2,23 +2,14 @@
 autoinstall:
   apt:
     disable_components: []
-    fallback: abort
+    fallback: offline-install
     geoip: true
     mirror-selection:
-      primary:
-      - country-mirror
-      - arches:
+    primary:
+    - arches:
         - amd64
         - i386
-        uri: http://archive.ubuntu.com/ubuntu
-      - arches:
-        - s390x
-        - arm64
-        - armhf
-        - powerpc
-        - ppc64el
-        - riscv64
-        uri: http://ports.ubuntu.com/ubuntu-ports
+      uri: http://mirror.aarnet.edu.au/pub/ubuntu/archive/
     preserve_sources_list: false
   codecs:
     install: false
@@ -48,11 +39,12 @@ autoinstall:
             password: SecureNetKey1
         dhcp4: true
   source:
-    id: ubuntu-server
-    search_drivers: false
+    id: ubuntu-server-minimal
+    search_drivers: true
   ssh:
     allow-pw: true
-    authorized-keys: []
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
     install-server: true
   storage:
     config:
@@ -143,5 +135,9 @@ autoinstall:
       device: format-0
       type: mount
       id: mount-0
-  updates: security
+  late-commands:
+    - |
+      rm /target/etc/hostname
+      echo 'administrator ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/99_admin_nopasswd
+      true
   version: 1
