@@ -27,17 +27,6 @@ autoinstall:
     toggle: null
     variant: ''
   locale: en_US.UTF-8
-  network:
-    ethernets:
-      enp0s31f6:
-        dhcp4: true
-    version: 2
-    wifis:
-      wlp2s0:
-        access-points:
-          romawi-5g:
-            password: SecureNetKey1
-        dhcp4: true
   source:
     id: ubuntu-server-minimal
     search_drivers: true
