@@ -127,5 +127,6 @@ autoinstall:
     - |
       rm /target/etc/hostname
       echo 'administrator ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/99_admin_nopasswd
+      mkdir /target/data
       true
   version: 1
