@@ -39,14 +39,15 @@ autoinstall:
     swap:
       size: 0
     config:
-    - ptable: gpt
-      serial: USB_SanDisk_3.2Gen1_010110b21b0a2bfbdde3673617d1a59e223a954e5bf448624c3a0a159317ca40151300000000000000000000263397e9ff9c490081558107192c8422-0:0
+    - type: disk
+      id: disk-usb
+      match: 
+        serial: 010110b21b0a2bf*
+      ptable: gpt
       wipe: superblock-recursive
       preserve: false
       name: ''
       grub_device: false
-      type: disk
-      id: disk-usb
     - device: disk-usb
       size: 1127219200
       wipe: superblock
