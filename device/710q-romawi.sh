@@ -129,7 +129,7 @@ virsh pool-define ${strPathVMxml}/isos.xml
 virsh pool-autostart isos
 virsh pool-start isos
 
-
+# Need to apply the netplan
 echo Applying netplan...
 netplan apply
 sleep 5
