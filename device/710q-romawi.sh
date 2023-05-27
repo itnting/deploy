@@ -10,6 +10,7 @@ echo "${strUser} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99_${strUser}_nopassw
 #Copy seed data
 echo "Copying ${strPathSeed}${strPathVM} to ${strPathVM}..."
 cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
+cp ${strPathSeed}/isos/* ${strPathVM}/isos
 
 #clam AV local mirror
 echo "Create ${strPathVM}/${strClamav}..."
