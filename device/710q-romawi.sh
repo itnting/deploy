@@ -7,9 +7,14 @@ timedatectl set-timezone ${strTimeZone}
 echo "Configure sudo for ${strUser}"
 echo "${strUser} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99_${strUser}_nopasswd
 
-#Copy seed data
-echo "Copying ${strPathSeed}${strPathVM} to ${strPathVM}..."
-cp ${strPathSeed}${strPathVM}/* ${strPathVM} -r
+#Create paths if needed and populate...
+echo "Createing paths needed..."
+mkdir ${strPathVM}
+mkdir ${strPathVM}/isos
+mkdir ${strPathVM}/vms
+mkdir ${strPathVM}/xml
+
+echo "Copying isos ${strPathSeed}/isos to ${strPathVM}..."
 cp ${strPathSeed}/isos/* ${strPathVM}/isos
 
 #clam AV local mirror
