@@ -42,7 +42,7 @@ autoinstall:
     - type: disk
       id: disk-usb
       match: 
-        serial: 010110b21b0a2bf*
+        serial: USB_*
       ptable: gpt
       wipe: superblock-recursive
       preserve: false
