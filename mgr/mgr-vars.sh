@@ -31,7 +31,7 @@ guestnic='enp1s0'
 
 # mgr-config.sh
 #dhstip='10.30.1.2'
-hstip='10.30.1.11'
+#hstip='10.30.1.11'
 
 debmirrorpath="${datavol}/debmirror"
 debmirrorloc="${rootvol}/debmirror"
