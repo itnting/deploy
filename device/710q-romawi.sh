@@ -12,6 +12,8 @@ echo "${sshKey_git}" > /home/${strUser}/.ssh/${keyName_git}
 echo "${sshKey_ugl}" > /home/${strUser}/.ssh/${keyName_ugl}
 # copy config to .ssh
 echo "${sshConfig}" > /home/${strUser}/.ssh/config
+sudo chmod 600 /home/${strUser}/.ssh/${keyName_git}
+sudo chmod 600 /home/${strUser}/.ssh/${keyName_ugl}
 
 #Create paths if needed and populate...
 echo "Createing paths needed..."
