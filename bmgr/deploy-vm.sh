@@ -1,6 +1,3 @@
-# get the vars needed
-source bmgr-vars.sh
-
 #Check to see if the vm is running and build if it does not exist.
 IFS=' '
 result=$(virsh domstate ${vm})
@@ -58,7 +55,6 @@ else
   fi
 fi
 
-#new untested code:
 #wait for guest and getip to use
 if [ -z "${guestip}" ]
 then
