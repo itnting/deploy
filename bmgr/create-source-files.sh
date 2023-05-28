@@ -7,23 +7,16 @@ source bmgr-running-vars.sh
 #clean known_hosts
 rm ~/.ssh/known_hosts
 #copy git cert to folder
-echo "${gitkey}" > /home/${user}/.ssh/ansible-deploy-ed25519i.pem
+echo "${sshKey_git}" > /home/${user}/.ssh/${keyName_git}
+
 #copy ugl cert to folder
-echo "${uglkey}" > /home/${user}/.ssh/ugl.pem
+echo "${sshKey_ugl}" > /home/${user}/.ssh/${keyName_ugl}
 
-echo "Copy config to .ssh..."
-cat <<EOF >/home/${user}/.ssh/config
-Host github
-        Hostname github.com
-        IdentityFile=/home/administrator/.ssh/ansible-deploy-ed25519i.pem
-Host *
-        IdentityFile=/home/administrator/.ssh/ugl.pem
-        StrictHostKeyChecking=accept-new
-EOF
+#copy config to .ssh
+echo "${sshConfig}" > /home/${user}/.ssh/config
 
-sudo chmod 600 /home/${user}/.ssh/ansible-deploy-ed25519i.pem
-sudo chmod 600 /home/${user}/.ssh/ugl.pem
-
+sudo chmod 600 /home/${user}/.ssh/${keyName_git}
+sudo chmod 600 /home/${user}/.ssh/${keyName_ugl}
 
 echo "Check required packages are installed..."
 sudo DEBIAN_FRONTEND=noninteractive apt install mc vim cloud-image-utils git
