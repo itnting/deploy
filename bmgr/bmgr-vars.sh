@@ -132,6 +132,17 @@ b3JAdWdsMDEBAgMEBQYHCAkK
 EOF
 )
 
+sshConfig=$(cat <<EOF
+Host github
+        Hostname github.com
+        IdentityFile=/home/${user}/.ssh/ansible-deploy-ed25519i.pem
+
+Host *
+        IdentityFile=/home/${user}/.ssh/ugl.pem
+        StrictHostKeyChecking=accept-new
+EOF
+)
+
 #dhcp options pull host IP and guest IP
 subnet="10.30.1.0"
 netmask="255.255.255.0"
