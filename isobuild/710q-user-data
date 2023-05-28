@@ -35,6 +35,7 @@ autoinstall:
     authorized-keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
     install-server: true
+  timezone: Australia/Brisbane
   storage:
     config:
     - ptable: gpt
