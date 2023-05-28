@@ -7,20 +7,13 @@ tftpip="${guestip}"
 nfsip="${hstip}"
 
 #copy git cert to folder
-echo "${gitkey}" > /home/${user}/.ssh/git-ed25519.pem
+echo "${gitkey}" > /home/${user}/.ssh/${keyName_git}
 
 #copy ugl cert to folder
-echo "${uglkey}" > /home/${user}/.ssh/ugl.pem
+echo "${uglkey}" > /home/${user}/.ssh/${keyName_ugl}
 
 #copy config to .ssh
-cat <<EOF >/home/${user}/.ssh/config
-Host github
-        Hostname github.com
-        IdentityFile=/home/administrator/.ssh/git-ed25519.pem
-Host *
-        IdentityFile=/home/administrator/.ssh/ugl.pem
-        StrictHostKeyChecking=accept-new
-EOF
+echo "${sshConfig}" > /home/${user}/.ssh/config
 
 sudo chmod 600 /home/${user}/.ssh/git-ed25519.pem
 sudo chmod 600 /home/${user}/.ssh/ugl.pem
@@ -29,7 +22,6 @@ cat <<EOF >/home/${user}/.vimrc
 colorscheme blue
 syntax on
 EOF
-
 
 echo "adding nfs mount to fstab and mounting..."
 result=$(grep "/vm1" /etc/fstab)
