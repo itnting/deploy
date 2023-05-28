@@ -1,5 +1,5 @@
 # get the vars needed
-source bmgr-running-vars.sh
+source bmgr-vars.sh
 
 #Check to see if the vm is running and build if it does not exist.
 IFS=' '
