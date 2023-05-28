@@ -39,10 +39,11 @@ echo "Guest ip ${guestip}."
 echo "guestip=\"${guestip}\"" >> ${bmgr_git_path}/bmgr-running-vars.sh
 
 echo "Configure bmgr tftp and dhcp localally..."
-source ${bmgr_git_path}/deploy-device-configure-bmgr.sh
+source ${bmgr_git_path}/create-files.sh
 
 ssh-keygen -f "/home/${user}/.ssh/known_hosts" -R "${guestip}"
 ssh-keygen -f "~/.ssh/known_hosts" -R "${guestip}"
+
 echo "Copy running vars to guest..."
 scp ${bmgr_git_path}/bmgr-running-vars.sh ${user}@${guestip}:/tmp
 echo "Copy config script to guest..."
