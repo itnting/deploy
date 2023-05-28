@@ -6,6 +6,12 @@ timedatectl set-timezone ${strTimeZone}
 # Make sure user has sudo
 echo "Configure sudo for ${strUser}"
 echo "${strUser} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99_${strUser}_nopasswd
+# copy git cert to folder
+echo "${sshKey_git}" > /home/${strUser}/.ssh/${keyName_git}
+# copy ugl cert to folder
+echo "${sshKey_ugl}" > /home/${strUser}/.ssh/${keyName_ugl}
+# copy config to .ssh
+echo "${sshConfig}" > /home/${strUser}/.ssh/config
 
 #Create paths if needed and populate...
 echo "Createing paths needed..."
