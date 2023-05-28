@@ -79,11 +79,11 @@ ver="ubuntu"
 gitbase="/git"
 
 # These paths will be used for the live env on the bmgr vm these can be poulated from /data/git or the local /git/dev or /git/live on the host
-gitlive="${gitbase}/live"
+gitlive="${gitbase}/home"
 gitdev="${gitbase}/dev"
 
 # These paths will be used locally only also need to be poulated before running the deployment script
-git_build="${gitlive}/build"
+git_build="${gitlive}/deploy"
 
 # other paths
 uefipath='/jammy-uefi'
