@@ -120,6 +120,8 @@ M7mwuM9cpNFT4pVcBPPoAAAAF3JlZ2lzdHJhdGlvbnNAZm1jcnIuY29tAQIDBAUG
 -----END OPENSSH PRIVATE KEY-----
 EOF
 )
+keyName_git="git-ed25519.pem"
+
 uglkey=$(cat <<EOF
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
@@ -131,14 +133,15 @@ b3JAdWdsMDEBAgMEBQYHCAkK
 -----END OPENSSH PRIVATE KEY-----
 EOF
 )
+keyName_ugl="ugl.pem"
 
 sshConfig=$(cat <<EOF
 Host github
         Hostname github.com
-        IdentityFile=/home/${user}/.ssh/ansible-deploy-ed25519i.pem
+        IdentityFile=/home/${user}/.ssh/${keyName_git}
 
 Host *
-        IdentityFile=/home/${user}/.ssh/ugl.pem
+        IdentityFile=/home/${user}/.ssh/${keyName_ugl}
         StrictHostKeyChecking=accept-new
 EOF
 )
