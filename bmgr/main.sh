@@ -14,7 +14,7 @@ cp ${env}-bmgr-vars.sh bmgr-running-vars.sh
 #source ${bmgr_git_path}/deploy-device-configure-localenv.sh
 
 echo "Deploy ${vm} if needed..."
-source ${bmgr_git_path}/deploy.sh
+source ${bmgr_git_path}/deploy-vm.sh
 
 #Get the host and guest ips and add to running vars
 echo "Getting host ip..."
