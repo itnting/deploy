@@ -7,16 +7,16 @@ tftpip="${guestip}"
 nfsip="${hstip}"
 
 #copy git cert to folder
-echo "${gitkey}" > /home/${user}/.ssh/${keyName_git}
+echo "${sshKey_git}" > /home/${user}/.ssh/${keyName_git}
 
 #copy ugl cert to folder
-echo "${uglkey}" > /home/${user}/.ssh/${keyName_ugl}
+echo "${sshKey_ugl}" > /home/${user}/.ssh/${keyName_ugl}
 
 #copy config to .ssh
 echo "${sshConfig}" > /home/${user}/.ssh/config
 
-sudo chmod 600 /home/${user}/.ssh/git-ed25519.pem
-sudo chmod 600 /home/${user}/.ssh/ugl.pem
+sudo chmod 600 /home/${user}/.ssh/${keyName_git}
+sudo chmod 600 /home/${user}/.ssh/${keyName_ugl}
 
 cat <<EOF >/home/${user}/.vimrc
 colorscheme blue
