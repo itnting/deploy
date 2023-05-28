@@ -6,7 +6,7 @@ if [ -z "${env}" ]; then
 fi
 echo "Environment is ${env}"
 echo "Copy vars to running vars and get contents..."
-cp mgr-script-vars.sh mgr-running-vars.sh
+cp mgr-vars.sh mgr-running-vars.sh
 chmod 755 mgr-running-vars.sh
 echo "Add ${env} to running vars..."
 echo "env=\"${env}\"" >> mgr-running-vars.sh
