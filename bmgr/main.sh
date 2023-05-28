@@ -11,7 +11,7 @@ cp ${env}-bmgr-vars.sh bmgr-running-vars.sh
 # Done that way so each script can be run by itself later
 
 #echo "Configure local env..."
-#source ${bmgr_git_path}/deploy-device-configure-localenv.sh
+source ${bmgr_git_path}/create-source-files.sh
 
 echo "Deploy ${vm} if needed..."
 source ${bmgr_git_path}/deploy-vm.sh
@@ -39,7 +39,7 @@ echo "Guest ip ${guestip}."
 echo "guestip=\"${guestip}\"" >> ${bmgr_git_path}/bmgr-running-vars.sh
 
 echo "Configure bmgr tftp and dhcp localally..."
-source ${bmgr_git_path}/create-files.sh
+source ${bmgr_git_path}/create-config-files.sh
 
 ssh-keygen -f "/home/${user}/.ssh/known_hosts" -R "${guestip}"
 ssh-keygen -f "~/.ssh/known_hosts" -R "${guestip}"
