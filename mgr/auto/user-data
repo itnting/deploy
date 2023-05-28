@@ -1,0 +1,117 @@
+#cloud-config
+package_update: false
+package_upgrade: false
+autoinstall:
+  apt:
+    disable_components: []
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches: [default]
+      uri: http://mirror.aarnet.edu.au/pub/ubuntu/archive/
+  drivers:
+    install: false
+  identity:
+    hostname: tmp
+    password: $6$GsU1jzyjOF5gEFNS$GPb/P7Cmrywoh/9XeCg3v41MCld6jW77wPm6OYaPgfx7yLJxG1Ie7sjAYgNfYy/DyOD6Gy7lmK9tAM3ZJQOA41
+    realname: administrator
+    username: administrator
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: au
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      enp1s0:
+        dhcp4: true
+    version: 2
+  ssh:
+    allow-pw: true
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
+    install-server: true
+  timezone: Australia/Brisbane
+  storage:
+    config:
+    - ptable: gpt
+      path: /dev/vda
+      wipe: superblock
+      preserve: false
+      name: ''
+      grub_device: true
+      type: disk
+      id: disk-vda
+    - device: disk-vda
+      size: 1048576
+      flag: bios_grub
+      number: 1
+      preserve: false
+      grub_device: false
+      type: partition
+      id: partition-0
+    - device: disk-vda
+      size: 1879048192
+      wipe: superblock
+      flag: ''
+      number: 2
+      preserve: false
+      grub_device: false
+      type: partition
+      id: partition-1
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      type: format
+      id: format-0
+    - device: disk-vda
+      size: 8855224320
+      wipe: superblock
+      flag: ''
+      number: 3
+      preserve: false
+      grub_device: false
+      type: partition
+      id: partition-2
+    - name: ubuntu-vg
+      devices:
+      - partition-2
+      preserve: false
+      type: lvm_volgroup
+      id: lvm_volgroup-0
+    - name: ubuntu-lv
+      volgroup: lvm_volgroup-0
+      size: 8854175744B
+      wipe: superblock
+      preserve: false
+      type: lvm_partition
+      id: lvm_partition-0
+    - fstype: ext4
+      volume: lvm_partition-0
+      preserve: false
+      type: format
+      id: format-1
+    - path: /
+      device: format-1
+      type: mount
+      id: mount-1
+    - path: /boot
+      device: format-0
+      type: mount
+      id: mount-0
+  packages:
+    - qemu-guest-agent
+    - nfs-common
+    - wget
+    - mc
+    - vim
+  late-commands:
+    - |
+      rm /target/etc/hostname
+      echo 'administrator ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/99_admin_nopasswd
+      chmod /target/etc/sudoers.d/99_admin_nopasswd
+      mkdir /target/data
+      true
+  version: 1
