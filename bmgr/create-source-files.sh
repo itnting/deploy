@@ -6,6 +6,8 @@ source bmgr-running-vars.sh
 
 #clean known_hosts
 rm ~/.ssh/known_hosts
+
+#This actually configures the sshkeys, this should be done when host is configured created!
 #copy git cert to folder
 echo "${sshKey_git}" > /home/${user}/.ssh/${keyName_git}
 
