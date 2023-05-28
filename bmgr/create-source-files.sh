@@ -1,8 +1,10 @@
-# This runs on the deployment device as part of setup.sh it creates all the files needed for the build manager server
-# Since the tftp, dhcp and grub need info on IP, that will happen after deployment and using deploy-device-configure-bmgr.sh
+# This runs on the deployment device as part of main.sh it creates all the files needed for the build manager server
+# tftp, dhcp and grub need info with IP, that will happen after deployment and using deploy-device-configure-bmgr.sh
 
 # get the vars needed
 source bmgr-running-vars.sh
+
+#This is part 1
 
 #additional vars needed
 isohttp="http://${guestip}/${isos}/${cdrom}"
@@ -124,6 +126,8 @@ sudo cp ${syslinux_path}/bios/com32/lib/libcom32.c32 ${tftp}/BIOS
 
 echo "Unmount iso..."
 sudo umount /mnt
+
+# This is part 2
 
 echo "Configuring grub menu..."
 sudo bash -c "cat > ${tftp}/grub/grub.cfg" << EOF
