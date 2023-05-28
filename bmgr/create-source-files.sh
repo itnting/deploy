@@ -7,6 +7,7 @@ source bmgr-running-vars.sh
 #clean known_hosts
 rm ~/.ssh/known_hosts
 
+#Maybe should move this to be done dureing host config under device!
 #copy git cert to folder
 echo "${sshKey_git}" > /home/${user}/.ssh/${keyName_git}
 
