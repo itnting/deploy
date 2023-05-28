@@ -14,7 +14,7 @@ autoinstall:
   identity:
     hostname: tmp
     password: $6$GsU1jzyjOF5gEFNS$GPb/P7Cmrywoh/9XeCg3v41MCld6jW77wPm6OYaPgfx7yLJxG1Ie7sjAYgNfYy/DyOD6Gy7lmK9tAM3ZJQOA41
-    realname: administrator
+    realname: Mr Admin
     username: administrator
   kernel:
     package: linux-generic
