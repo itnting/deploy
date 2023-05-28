@@ -1,6 +1,6 @@
 gitbase="/git"
 gitdev="${gitbase}/dev"
-gitlive="${gitbase}/live"
+gitlive="${gitbase}/home"
 
 ansible_deploy="${gitlive}/ansible-deploy"
 maint_script="maint_all_nodes"
