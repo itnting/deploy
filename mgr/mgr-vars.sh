@@ -16,7 +16,7 @@ datavol="/data"
 #in an offline scenario copy /data/git to /git/live
 #in online scenario copy /git/dev /git/live
 
-path="${gitlive}/build/mgr"
+path="${gitlive}/deploy/mgr"
 isopath="${rootvol}/isos"
 isoimage="ubuntu-22.04.2-live-server-amd64.iso"
 
