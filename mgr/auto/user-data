@@ -36,70 +36,70 @@ autoinstall:
   timezone: Australia/Brisbane
   storage:
     config:
-    - ptable: gpt
+    - type: disk
       path: /dev/vda
+      ptable: gpt
       wipe: superblock
       preserve: false
       name: ''
       grub_device: true
-      type: disk
       id: disk-vda
-    - device: disk-vda
+    - type: partition
+      device: disk-vda
       size: 1048576
       flag: bios_grub
       number: 1
       preserve: false
       grub_device: false
-      type: partition
       id: partition-0
-    - device: disk-vda
+    - type: partition
+      device: disk-vda
       size: 1879048192
       wipe: superblock
       flag: ''
       number: 2
       preserve: false
       grub_device: false
-      type: partition
       id: partition-1
-    - fstype: ext4
+    - type: format
       volume: partition-1
+      fstype: ext4
       preserve: false
-      type: format
       id: format-0
-    - device: disk-vda
+    - type: partition
+      device: disk-vda
       size: 8855224320
       wipe: superblock
       flag: ''
       number: 3
       preserve: false
       grub_device: false
-      type: partition
       id: partition-2
-    - name: ubuntu-vg
+    - type: lvm_volgroup
+      name: vg0
       devices:
       - partition-2
       preserve: false
-      type: lvm_volgroup
       id: lvm_volgroup-0
-    - name: ubuntu-lv
+    - type: lvm_partition
+      name: root
       volgroup: lvm_volgroup-0
       size: 8854175744B
       wipe: superblock
       preserve: false
-      type: lvm_partition
       id: lvm_partition-0
-    - fstype: ext4
+    - type: format
+      fstype: ext4
       volume: lvm_partition-0
       preserve: false
-      type: format
       id: format-1
-    - path: /
+    - type: mount
+      path: /
       device: format-1
-      type: mount
       id: mount-1
-    - path: /boot
+    - type: mount
+      path: /boot
       device: format-0
-      type: mount
       id: mount-0
   packages:
     - qemu-guest-agent
