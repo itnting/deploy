@@ -1,7 +1,7 @@
 #fncWriteVarToNewFile <var> <file> <mode> <user>
 #Overwrites file if it exists
 function fncWriteVarToNewFile {
-  echo "Writing $1 to $2 with ${3+default} for ${4+currentuser}
+  echo "Writing $1 to $2 with ${3+default} for ${4+currentuser}..."
   echo "$1" > "$2"
   if [ -z "$3" ]; then
     chmod $3 $2 
@@ -13,6 +13,7 @@ function fncWriteVarToNewFile {
 
 #fncWriteVarToFile <var> <file>
 function fncWriteVarToFile {
+  echo "Writing $1 to $2..."
   echo "$1" >> "$2"
 }
 
@@ -20,6 +21,9 @@ function fncWriteVarToFile {
 # -q quiet -F not regex -x whole line
 function fncWriteVarToFileIfNotIn {
   if [ ! "$(grep -qFx "$1" "$2")" ]; then
+    echo "Writing $1 to $2..."
     fncWriteVarToFile "$1" "$2"
+  else
+    echo "$1 is already in $2!"
   fi
 }
