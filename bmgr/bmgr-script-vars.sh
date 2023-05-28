@@ -1,10 +1,17 @@
 #Host info
 #will use these for DHCP and later to set them to static IP
 #host_mac_list=("00:23:24:43:6a:eb" "00:23:24:43:6a:ff")
-#host_mac_list=("00:23:24:43:6a:eb")
 #host_mac_list=("6c:24:08:8f:dd:27")
-#below was ugl03
-#host_mac_list=("6c:24:08:8a:e9:5b")
+
+#Origioanl UGL M70q's
+#"6c:24:08:7e:ba:92" \
+#"6c:24:08:8a:e8:84" \
+#"6c:24:08:8a:e9:5b" \
+
+#busways 720q's
+#"98:fa:9b:69:16:42" \
+#"98:fa:9b:69:1a:cc" \
+#"98:fa:9b:63:57:4e" \
 
 # Use space not a , !!
 host_mac_list=( \
