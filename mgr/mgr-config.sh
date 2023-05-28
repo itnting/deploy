@@ -4,39 +4,18 @@ source /tmp/mgr-running-vars.sh
 echo "Set timezone ${timezone}..."
 sudo timedatectl set-timezone ${timezone}
 
-#copy git cert to folder
-cat <<EOF >/home/${user}/.ssh/ansible-deploy-ed25519i.pem
------BEGIN OPENSSH PRIVATE KEY-----
-b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-QyNTUxOQAAACDvtQ8x6rchHz/Skley3svVMTO5sLjPXKTRU+KVXATz6AAAAKC1H/+dtR//
-nQAAAAtzc2gtZWQyNTUxOQAAACDvtQ8x6rchHz/Skley3svVMTO5sLjPXKTRU+KVXATz6A
-AAAEBqowXGWyJRZR0qdL+K1i9R1fpi8BXXsDDp2ZiZ0mX8l++1DzHqtyEfP9KSV7Ley9Ux
-M7mwuM9cpNFT4pVcBPPoAAAAF3JlZ2lzdHJhdGlvbnNAZm1jcnIuY29tAQIDBAUG
------END OPENSSH PRIVATE KEY-----
-EOF
 
-#copy ugl cert to folder
-cat <<EOF >/home/${user}/.ssh/ugl.pem
------BEGIN OPENSSH PRIVATE KEY-----
-b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
-c2gtZWQyNTUxOQAAACCGJelmrKz9YcM94QVJ2BIdmQhXhdlknQQhnzavQz5bJQAA
-AKAhkYIEIZGCBAAAAAtzc2gtZWQyNTUxOQAAACCGJelmrKz9YcM94QVJ2BIdmQhX
-hdlknQQhnzavQz5bJQAAAEB2X7vAYhzs0hz8G2R0NuCkEolGETFsnoYl73+JSS3B
-B4Yl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlslAAAAE2FkbWluaXN0cmF0
-b3JAdWdsMDEBAgMEBQYHCAkK
------END OPENSSH PRIVATE KEY-----
-EOF
+#copy certs to folder
+echo "${sshKey_git}" > /home/${user}/.ssh/${keyName_git}
+echo "${sshKey_ugl}" > /home/${user}/.ssh/${keyName_ugl}
 
 #copy config to .ssh
-cat <<EOF >/home/${user}/.ssh/config
-Host github
-        Hostname github.com
-        IdentityFile=/home/${user}/.ssh/ansible-deploy-ed25519i.pem
+echo "${sshConfig}" > /home/${user}/.ssh/config
 
-Host *
-        IdentityFile=/home/${user}/.ssh/ugl.pem
-        StrictHostKeyChecking=accept-new
-EOF
+sudo chmod 600 /home/${user}/.ssh/${keyName_git}
+sudo chmod 600 /home/${user}/.ssh/${keyName_ugl}
+sudo chown ${user}:${user} /home/${user}/.ssh/${keyName_git}
+sudo chown ${user}:${user} /home/${user}/.ssh/${keyName_ugl}
 
 cat <<EOF >/home/${user}/.vimrc
 colorscheme blue
@@ -45,10 +24,6 @@ EOF
 sudo cp /home/${user}/.vimrc /root/.vimrc
 sudo chown ${user}:${user} /home/${user}/.vimrc
 
-sudo chmod 600 /home/${user}/.ssh/ansible-deploy-ed25519i.pem
-sudo chmod 600 /home/${user}/.ssh/ugl.pem
-sudo chown ${user}:${user} /home/${user}/.ssh/ansible-deploy-ed25519i.pem
-sudo chown ${user}:${user} /home/${user}/.ssh/ugl.pem
 
 #local repo
 #sudo sh -c "echo \"${hstip}:/vm1 /vm1 nfs4 defaults,nofail 0 0\" >> /etc/fstab"
