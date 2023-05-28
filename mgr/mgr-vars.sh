@@ -35,3 +35,40 @@ hstip='10.30.1.11'
 
 debmirrorpath="${datavol}/debmirror"
 debmirrorloc="${rootvol}/debmirror"
+
+#keys
+sshKey_git=$(cat <<EOF
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACDvtQ8x6rchHz/Skley3svVMTO5sLjPXKTRU+KVXATz6AAAAKC1H/+dtR//
+nQAAAAtzc2gtZWQyNTUxOQAAACDvtQ8x6rchHz/Skley3svVMTO5sLjPXKTRU+KVXATz6A
+AAAEBqowXGWyJRZR0qdL+K1i9R1fpi8BXXsDDp2ZiZ0mX8l++1DzHqtyEfP9KSV7Ley9Ux
+M7mwuM9cpNFT4pVcBPPoAAAAF3JlZ2lzdHJhdGlvbnNAZm1jcnIuY29tAQIDBAUG
+-----END OPENSSH PRIVATE KEY-----
+EOF
+)
+keyName_git="git-ed25519.pem"
+
+sshKey_ugl=$(cat <<EOF
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
+c2gtZWQyNTUxOQAAACCGJelmrKz9YcM94QVJ2BIdmQhXhdlknQQhnzavQz5bJQAA
+AKAhkYIEIZGCBAAAAAtzc2gtZWQyNTUxOQAAACCGJelmrKz9YcM94QVJ2BIdmQhX
+hdlknQQhnzavQz5bJQAAAEB2X7vAYhzs0hz8G2R0NuCkEolGETFsnoYl73+JSS3B
+B4Yl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlslAAAAE2FkbWluaXN0cmF0
+b3JAdWdsMDEBAgMEBQYHCAkK
+-----END OPENSSH PRIVATE KEY-----
+EOF
+)
+keyName_ugl="ugl.pem"
+
+sshConfig=$(cat <<EOF
+Host github
+        Hostname github.com
+        IdentityFile=/home/${user}/.ssh/${keyName_git}
+
+Host *
+        IdentityFile=/home/${user}/.ssh/${keyName_ugl}
+        StrictHostKeyChecking=accept-new
+EOF
+)
