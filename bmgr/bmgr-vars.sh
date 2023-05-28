@@ -110,7 +110,7 @@ hstnic='br0'
 guestnic='enp1s0'
 
 #keys
-gitkey=$(cat <<EOF
+sshKey_git=$(cat <<EOF
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
 QyNTUxOQAAACDvtQ8x6rchHz/Skley3svVMTO5sLjPXKTRU+KVXATz6AAAAKC1H/+dtR//
@@ -122,7 +122,7 @@ EOF
 )
 keyName_git="git-ed25519.pem"
 
-uglkey=$(cat <<EOF
+sshKey_ugl=$(cat <<EOF
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
 c2gtZWQyNTUxOQAAACCGJelmrKz9YcM94QVJ2BIdmQhXhdlknQQhnzavQz5bJQAA
