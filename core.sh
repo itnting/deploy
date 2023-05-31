@@ -1,5 +1,7 @@
-#fncWriteToNewFile <text> <file> <mode> <user>
-#Overwrites file if it exists
+# fncWriteToNewFile <text> <file> <mode> <user>
+# mode defaults to 755 if not specified
+# user defaults to the user the script is running as (root if sudo) if not specified
+# Overwrites file if it exists
 function fncWriteToNewFile {
   if [ -z "${1:+x}" ]; then
     echo "Need text parameter!"
@@ -17,7 +19,7 @@ function fncWriteToNewFile {
   chown ${strOwner}:${strOwner} $2
 }
 
-#fncWriteToFile <text> <file>
+# fncWriteToFile <text> <file>
 function fncWriteToFile {
   if [ -z "${1:+x}" ]; then
     echo "Need text parameter!"
@@ -30,8 +32,7 @@ function fncWriteToFile {
   printf -- "$1\n" >> "$2"
 }
 
-#fncWriteToFileIfNotIn <text> <file>
-# -q quiet -F not regex -x whole line
+# fncWriteToFileIfNotIn <text> <file>
 function fncWriteToFileIfNotIn {
   if [ -z "${1:+x}" ]; then
     echo "Need text parameter!"
@@ -39,6 +40,7 @@ function fncWriteToFileIfNotIn {
   if [ -z "${2:+x}" ]; then
     echo "Need file parameter!"
   fi
+  # -q quiet -F not regex -x whole line
   if grep -qFx "$1" $2; then
     printf -- "$1 is already in $2!\n"
   else
