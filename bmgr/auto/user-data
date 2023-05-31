@@ -75,7 +75,7 @@ autoinstall:
       id: format-0
     - type: partition
       device: disk-vda
-      size: 100%
+      size: -1
       wipe: superblock
       flag: ''
       number: 3
@@ -91,7 +91,7 @@ autoinstall:
     - type: lvm_partition
       name: root
       volgroup: lvm_volgroup-0
-      size: 8854175744B
+      size: 100%
       wipe: superblock
       preserve: false
       id: lvm_partition-0
