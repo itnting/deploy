@@ -68,7 +68,7 @@ autoinstall:
       id: format-0
     - type: partition
       device: disk-vda
-      size: 8855224320
+      size: -1
       wipe: superblock
       flag: ''
       number: 3
