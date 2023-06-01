@@ -47,3 +47,23 @@ function fncWriteToFileIfNotIn {
     fncWriteToFile "$1" "$2"
   fi
 }
+
+# This function is not tested yet
+# function to add an NFS mount to fstab, assume path and mount are same
+# $3 specify defaults, will use defaults,nofail 0 0  otherwise
+function fncAddNfsMountToFstab {
+  if [ -z "$1:+x" ] || [ -z "$2:+x" ]; then
+    echo "fncAddNfsMountToFstab, missing parameters!"
+  else
+    strDefaults=${3:-defaults,nofail 0 0}
+    strFullMount="\"$1:$2 $2 nfs4${strDefaults}\""
+    if grep -qFx "${strFullMount}" /etc/fstab); then
+      echo "Mount ${strFullMount} already exists!"
+    else
+      sudo sh -c "echo ${strFullMount} >> /etc/fstab"
+      sudo mkdir $2
+      sudo chattr +i $2
+      sudo mount $2
+    fi
+  fi
+}
