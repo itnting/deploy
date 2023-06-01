@@ -9,8 +9,8 @@ function fncWriteToNewFile {
   if [ -z "${2:+x}" ]; then
     echo "Need file parameter!"
   fi
-  strMode="${3:-755}"
-  strOwner="${4:-$(whoami)}"
+  local strMode="${3:-755}"
+  local strOwner="${4:-$(whoami)}"
   printf "Writing $1 to $2...\n"
   printf -- "$1\n" > "$2"
   echo "chmod ${strMode}..."
@@ -27,7 +27,6 @@ function fncWriteToFile {
   if [ -z "${2:+x}" ]; then
     echo "Need file parameter!"
   fi
-
   printf "Writing $1 to $2...\n"
   printf -- "$1\n" >> "$2"
 }
@@ -69,8 +68,8 @@ function fncAddNfsMountToFstab {
   if [ -z "$1:+x" ] || [ -z "$2:+x" ]; then
     echo "fncAddNfsMountToFstab, missing parameters!"
   else
-    strDefaults=${3:-defaults,nofail 0 0}
-    strFullMount="$1:$2 $2 nfs4 ${strDefaults}"
+    local strDefaults=${3:-defaults,nofail 0 0}
+    local strFullMount="$1:$2 $2 nfs4 ${strDefaults}"
     if grep -qFx "${strFullMount}" /etc/fstab; then
       echo "Mount ${strFullMount} already exists!"
     else
@@ -79,5 +78,3 @@ function fncAddNfsMountToFstab {
     fi
   fi
 }
-
-
