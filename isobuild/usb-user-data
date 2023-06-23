@@ -98,7 +98,7 @@ autoinstall:
       id: mount-3
       options: 'noatime'
     - device: disk-usb
-      size: 10737418240
+      size: 3G
       wipe: superblock
       number: 4
       preserve: false
