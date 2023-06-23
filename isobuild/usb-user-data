@@ -42,7 +42,7 @@ autoinstall:
     - type: disk
       id: disk-usb
       match: 
-        serial: USB_*
+        serial: Samsung_Flash_*
       ptable: gpt
       wipe: superblock-recursive
       preserve: false
