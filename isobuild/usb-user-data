@@ -57,12 +57,12 @@ autoinstall:
       grub_device: true
       offset: 1048576
       type: partition
-      id: partition-0
+      id: partition-efi
     - type: format
       fstype: fat32
-      volume: partition-0
+      volume: partition-efi
       preserve: false
-      id: format-0
+      id: format-efi
     - type: partition
       device: disk-usb
       size: 2147483648
@@ -71,58 +71,58 @@ autoinstall:
       preserve: false
       grub_device: false
       offset: 1128267776
-      id: partition-1
+      id: partition-boot
     - type: format
       fstype: ext4
-      volume: partition-1
+      volume: partition-boot
       preserve: false
-      id: format-1
+      id: format-boot
     - type: partition
       device: disk-usb
-      size: 20G
+      size: 30G
       wipe: superblock
       number: 3
       preserve: false
       grub_device: false
       offset: 3275751424
       resize: true
-      id: partition-2
+      id: partition-root
     - type: format
       fstype: ext4
-      volume: partition-2
+      volume: partition-root
       preserve: false
-      id: format-3
+      id: format-root
     - type: partition
       device: disk-usb
-      size: 3G
+      size: 10G
       wipe: superblock
       number: 4
       preserve: false
       grub_device: false
       offset: 19381878784
-      id: partition-3
+      id: partition-git
     - type: format
       fstype: ext4
-      volume: partition-3
+      volume: partition-git
       preserve: false
-      id: format-4
+      id: format-git
     - type: mount
       path: /
-      device: format-3
-      id: mount-3
+      device: format-root
+      id: mount-root
       options: 'noatime'
     - type: mount
       path: /boot
-      device: format-1
-      id: mount-1
+      device: format-boot
+      id: mount-boot
     - type: mount
       path: /boot/efi
-      device: format-0
-      id: mount-0
+      device: format-efi
+      id: mount-efi
     - type: mount
       path: /git
-      device: format-4
-      id: mount-4
+      device: format-git
+      id: mount-git
   late-commands:
     - |
       rm /target/etc/hostname
