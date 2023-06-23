@@ -40,7 +40,6 @@ autoinstall:
       size: 0
     config:
     - type: disk
-      id: disk-usb
       match: 
         serial: Samsung_Flash_*
       ptable: gpt
@@ -48,6 +47,7 @@ autoinstall:
       preserve: false
       name: ''
       grub_device: false
+      id: disk-usb
     - device: disk-usb
       size: 1127219200
       wipe: superblock
@@ -58,71 +58,71 @@ autoinstall:
       offset: 1048576
       type: partition
       id: partition-0
-    - fstype: fat32
+    - type: format
+      fstype: fat32
       volume: partition-0
       preserve: false
-      type: format
       id: format-0
-    - device: disk-usb
+    - type: partition
+      device: disk-usb
       size: 2147483648
       wipe: superblock
       number: 2
       preserve: false
       grub_device: false
       offset: 1128267776
-      type: partition
       id: partition-1
-    - fstype: ext4
+    - type: format
+      fstype: ext4
       volume: partition-1
       preserve: false
-      type: format
       id: format-1
-    - device: disk-usb
-      size: 42949672960B
+    - type: partition
+      device: disk-usb
+      size: 20G
       wipe: superblock
       number: 3
       preserve: false
       grub_device: false
       offset: 3275751424
       resize: true
-      type: partition
       id: partition-2
-    - fstype: ext4
+    - type: format
+      fstype: ext4
       volume: partition-2
       preserve: false
-      type: format
       id: format-3
-    - path: /
-      device: format-3
-      type: mount
-      id: mount-3
-      options: 'noatime'
-    - device: disk-usb
+    - type: partition
+      device: disk-usb
       size: 3G
       wipe: superblock
       number: 4
       preserve: false
       grub_device: false
       offset: 19381878784
-      type: partition
       id: partition-3
-    - fstype: ext4
+    - type: format
+      fstype: ext4
       volume: partition-3
       preserve: false
-      type: format
       id: format-4
-    - path: /git
-      device: format-4
-      type: mount
-      id: mount-4
-    - path: /boot
+    - type: mount
+      path: /
+      device: format-3
+      id: mount-3
+      options: 'noatime'
+    - type: mount
+      path: /boot
       device: format-1
-      type: mount
       id: mount-1
-    - path: /boot/efi
+    - type: mount
+      path: /boot/efi
       device: format-0
-      type: mount
       id: mount-0
+    - type: mount
+      path: /git
+      device: format-4
+      id: mount-4
   late-commands:
     - |
       rm /target/etc/hostname
