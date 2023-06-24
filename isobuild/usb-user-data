@@ -34,6 +34,8 @@ autoinstall:
     allow-pw: true
     authorized-keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYl6WasrP1hwz3hBUnYEh2ZCFeF2WSdBCGfNq9DPlsl administrator@ugl
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTKrcRX7xYb873xyYmiAxDou1TKAH0x8VmzwdRLZrlNeLJsJtxnncDLriESnzZ6rIaIB/mtToKDyQ4Awl37lMMBm1XLkk7LtsrWXvu0glr8apiyanonsJISwJDz6iG60hgwxKAmK9yBwZDLQbTJqNDAPVEMEQp9LNEUGEojIKoi1h4gubjRfawlJdVBA2enil2WdYPXGtT+qXkxRS6HTLrmeprBMmNK9Rh6HBqqrHyf9yX0uZsYQfnVkwNQKAPRs8Uo7OrgoGkWnjfOKQB3ubOOK1/Begr/wWNUdfpp9W+yk2DA++AIEF04/oA0+GKraM+W5r73DiIaHCn+mNfLDeB romawi
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6XqawpKDgZ11DdcFk7fGvailRxOAdN5c/t2gokzyyF dstote@webnmail.net
     install-server: true
   storage:
     swap:
