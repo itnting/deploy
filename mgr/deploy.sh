@@ -62,26 +62,26 @@ else
      exit 1
   fi
 fi
-echo "Getting host ip..."
-if [ -z "${hstip}" ]
-then
-  hstip=$(ip -f inet addr show ${hstnic} | sed -En -e 's/.*inet ([0-9.]+).*/\1/p')
-  echo "hstip=\"${hstip}\"" >> ${path}/mgr-running-vars.sh
-fi
-echo "Host ip ${hstip}."
+#echo "Getting host ip..."
+#if [ -z "${hstip}" ]
+#then
+#  hstip=$(ip -f inet addr show ${hstnic} | sed -En -e 's/.*inet ([0-9.]+).*/\1/p')
+#  echo "hstip=\"${hstip}\"" >> ${path}/mgr-running-vars.sh
+#fi
+#echo "Host ip ${hstip}."
 
 #wait for guest and getip to use
-if [ -z "${guestip}" ]
-then
-  while [ -z "${guestip}" ]
-  do
-    guestip=$(virsh domifaddr --domain ${vm} --source agent | grep ${guestnic} | egrep -o '([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}')  
-    echo "Try again until guest agent responds..."
-    sleep 5
-  done
-  echo "guestip=\"${guestip}\""
-  sleep 5
-fi
+#if [ -z "${guestip}" ]
+#then
+#  while [ -z "${guestip}" ]
+#  do
+#    guestip=$(virsh domifaddr --domain ${vm} --source agent | grep ${guestnic} | egrep -o '([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}')  
+#    echo "Try again until guest agent responds..."
+#    sleep 5
+#  done
+#  echo "guestip=\"${guestip}\""
+#  sleep 5
+#fi
 
 #echo "removing ${guestip} from known hosts..."
 #ssh-keygen -f "/home/${user}/.ssh/known_hosts" -R "${guestip}"
