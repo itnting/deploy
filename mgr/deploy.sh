@@ -83,16 +83,16 @@ then
   sleep 5
 fi
 
-echo "removing ${guestip} from known hosts..."
-ssh-keygen -f "/home/${user}/.ssh/known_hosts" -R "${guestip}"
-sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "${guestip}"
+#echo "removing ${guestip} from known hosts..."
+#ssh-keygen -f "/home/${user}/.ssh/known_hosts" -R "${guestip}"
+#sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "${guestip}"
 
-echo "copy script to $guestip..."
-scp -o StrictHostKeyChecking=accept-new mgr-config.sh ${user}@${guestip}:/tmp/config.sh
-ssh ${user}@${guestip} "chmod +x /tmp/config.sh"
+#echo "copy script to $guestip..."
+#scp -o StrictHostKeyChecking=accept-new mgr-config.sh ${user}@${guestip}:/tmp/config.sh
+#ssh ${user}@${guestip} "chmod +x /tmp/config.sh"
 
-echo "Copy running vars to guest..."
-scp mgr-running-vars.sh ${user}@${guestip}:/tmp
+#echo "Copy running vars to guest..."
+#scp mgr-running-vars.sh ${user}@${guestip}:/tmp
 
-echo "running script on $guestip..."
-ssh ${user}@${guestip} "/tmp/config.sh"
+#echo "running script on $guestip..."
+#ssh ${user}@${guestip} "/tmp/config.sh"
