@@ -77,24 +77,24 @@ EOF
 mkdir /home/dstote/.ssh
 chown dstote:dstote /home/dstote/.ssh
 chmod 700 /home/dstote/.ssh
-fncWriteToFile "${sshPubKey_dstote}" "/home/dstote/.ssh/id_ed25519.pub"
+fncWriteToFileIfNotIn "${sshPubKey_dstote}" "/home/dstote/.ssh/id_ed25519.pub"
 chown dstote:dstote /home/dstote/.ssh/id_ed25519.pub
 chmod 644 /home/dstote/.ssh/id_ed25519.pub
-fncWriteToFile "${sshKey_dstote}" "/home/dstote/.ssh/id_ed25519"
+fncWriteToFileIfNotIn "${sshKey_dstote}" "/home/dstote/.ssh/id_ed25519"
 chown dstote:dstote /home/dstote/.ssh/id_ed25519
 chmod 600 /home/dstote/.ssh/id_ed25519
 
-fncWriteToFile "${sshPubKey_admin}" "/home/administrator/.ssh/id_ed25519.pub"
+fncWriteToFileIfNotIn "${sshPubKey_admin}" "/home/administrator/.ssh/id_ed25519.pub"
 chown administrator:administrator /home/administrator/.ssh/id_ed25519.pub
 chmod 644 /home/administrator/.ssh/id_ed25519.pub
-fncWriteToFile "${sshKey_admin}" "/home/administrator/.ssh/id_ed25519"
+fncWriteToFileIfNotIn "${sshKey_admin}" "/home/administrator/.ssh/id_ed25519"
 chown administrator:administrator /home/administrator/.ssh/id_ed25519
 chmod 600 /home/administrator/.ssh/id_ed25519
 
-fncWriteToFile "${sshPubKey_root}" "/root/.ssh/id_ed25519.pub"
+fncWriteToFileIfNotIn "${sshPubKey_root}" "/root/.ssh/id_ed25519.pub"
 chown root:root /root/.ssh/id_ed25519.pub
 chmod 644 /root/.ssh/id_ed25519.pub
-fncWriteToFile "${sshKey_root}" "/root/.ssh/id_ed25519"
+fncWriteToFileIfNotIn "${sshKey_root}" "/root/.ssh/id_ed25519"
 chown root:root /root/.ssh/id_ed25519
 chmod 600 /root/.ssh/id_ed25519
 
