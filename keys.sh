@@ -99,6 +99,13 @@ chown root:root /root/.ssh/id_ed25519
 chmod 600 /root/.ssh/id_ed25519
 
 # Config Authorized Keys
+fncWriteToFileIfNotIn "${sshPubKey_dstote}" "/home/dstote/.ssh/authorized_keys"
+fncWriteToFileIfNotIn "${sshPubKey_admin}" "/home/dstote/.ssh/authorized_keys"
+fncWriteToFileIfNotIn "${sshPubKey_root}" "/home/dstote/.ssh/authorized_keys"
+fncWriteToFileIfNotIn "${sshPubKey_dstote}" "/home/administrator/.ssh/authorized_keys"
+fncWriteToFileIfNotIn "${sshPubKey_admin}" "/home/administrator/.ssh/authorized_keys"
+fncWriteToFileIfNotIn "${sshPubKey_root}" "/home/administrator/.ssh/authorized_keys"
 fncWriteToFileIfNotIn "${sshPubKey_dstote}" "/root/.ssh/authorized_keys"
 fncWriteToFileIfNotIn "${sshPubKey_admin}" "/root/.ssh/authorized_keys"
 fncWriteToFileIfNotIn "${sshPubKey_root}" "/root/.ssh/authorized_keys"
+
